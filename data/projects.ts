@@ -40,7 +40,7 @@ export const projects = [
   },
   {
     id: "music-genre-classification",
-    title: "Music Genre Classification to a SOTA",
+    title: "State-of-the-Art Music Genre Classification",
     description:
       "Designed a reproducible pipeline for Music Genre Classification on the GTZAN dataset, achieving a State-of-the-Art (SOTA) of 83.5% test accuracy with a U-Net inspired model.",
     technologies: ["Python", "TensorFlow", "Keras", "Scikit-learn", "Jupyter"],
