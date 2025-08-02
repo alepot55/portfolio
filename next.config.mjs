@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'export',
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -10,6 +11,7 @@ const nextConfig = {
     domains: ['localhost'],
     unoptimized: true,
   },
+  trailingSlash: true,
 }
 
 export default nextConfig
