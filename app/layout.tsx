@@ -12,9 +12,8 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "Alessandro - Computer Engineering Student",
-  description: "Computer Engineering student specializing in AI/ML and GPU Computing",
-  generator: 'v0.dev',
+  title: "Alessandro Potenza",
+  description: "Computer Engineering student specializing in AI/ML and GPU Computing"
 }
 
 export const viewport = {

@@ -1,24 +1,16 @@
 export const experiences = [
   {
-    id: "ml-research-intern",
-    title: "ML Research Intern",
-    company: "AI Research Lab",
-    period: "Summer 2024",
-    description:
-      "Researched novel architectures for efficient transformer models and published findings in workshop proceedings",
+    id: "huawei-seeds-for-the-future",
+    title: "Tech Program Global Finalist",
+    company: "Huawei (Seeds For The Future)",
+    period: "2023 - 2024",
+    description: "Selected for an elite tech program on AI & 5G; prototyped an AI mobile application to reduce food waste, leading the project to become a Global Finalist in the Tech4Good competition.",
   },
   {
-    id: "software-engineering-intern",
-    title: "Software Engineering Intern",
-    company: "Tech Startup",
-    period: "Summer 2023",
-    description: "Developed microservices for real-time data processing with 40% performance improvement",
+    id: "academic-mentor-tutor",
+    title: "Academic Mentor & Tutor",
+    company: "Self-Employed",
+    period: "2022 - Present",
+    description: "Delivered over 800 hours of mentoring in Machine Learning, Python, and Algorithms, guiding university students on thesis research and complex software development projects.",
   },
-  {
-    id: "teaching-assistant",
-    title: "Teaching Assistant",
-    company: "University Computer Science Department",
-    period: "2023 - Present",
-    description: "Lead lab sessions on CUDA programming and mentor students on research projects",
-  },
-]
+];

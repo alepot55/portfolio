@@ -1,8 +1,8 @@
 export const skills = {
-  Programming: ["Python", "C++", "Go", "JavaScript", "TypeScript", "CUDA"],
-  "AI/ML": ["PyTorch", "TensorFlow", "Scikit-learn", "Hugging Face", "MLflow", "TensorRT"],
-  Systems: ["Docker", "Kubernetes", "Linux", "Git", "AWS", "GCP", "Distributed Systems"],
-  Databases: ["PostgreSQL", "MongoDB", "Redis", "InfluxDB"],
-  Web: ["React", "Next.js", "FastAPI", "Node.js", "GraphQL"],
-  Tools: ["Jupyter", "VS Code", "Vim", "Prometheus", "Grafana", "Jenkins"],
-}
+  Programming: ["Python", "C++", "Java", "SQL", "JavaScript", "TypeScript", "C"],
+  "AI/ML": ["PyTorch", "TensorFlow", "Scikit-learn", "LLMs (Gemini API)", "NLP", "Computer Vision", "SLAM"],
+  Systems: ["Docker", "Kubernetes", "Linux", "Git", "GCP", "AWS", "CUDA", "Triton"],
+  Databases: ["PostgreSQL", "MongoDB", "MySQL", "Redis", "VectorDB", "Spark"],
+  Web: ["React", "TypeScript", "Node.js", "REST APIs"],
+  Tools: ["VS Code", "Jupyter", "Vim", "Git", "Docker"],
+};

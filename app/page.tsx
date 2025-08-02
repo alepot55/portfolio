@@ -17,41 +17,47 @@ export default function Portfolio() {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         {/* Hero Section */}
         <section className="mb-16 sm:mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12 items-start">
             <div className="lg:col-span-2">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 sm:mb-6 tracking-tight">Alessandro</h1>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-light mb-4 sm:mb-6 tracking-tight">Alessandro Potenza</h1>
               <p className="text-base sm:text-lg lg:text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
                 Computer Engineering student specializing in AI/ML and GPU Computing
               </p>
             </div>
             <div className="flex flex-row lg:flex-col gap-4 sm:gap-6 lg:gap-4 lg:items-end flex-wrap">
-              <a
+              {/* <a
                 href="/cv.pdf"
                 download="Alessandro_CV.pdf"
                 className="flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 bg-gray-900 dark:bg-gray-100 text-white dark:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-300 transition-colors text-sm font-medium rounded whitespace-nowrap"
               >
                 <Download size={16} />
                 <span>Download CV</span>
-              </a>
+              </a> */}
               <a
-                href="mailto:alessandro@example.com"
+                href="mailto:ap.alessandro.potenza@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
                 <Mail size={18} />
                 <span className="text-sm">Email</span>
               </a>
               <a
-                href="https://github.com/alessandro"
+                href="https://github.com/alepot55"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
                 <Github size={18} />
                 <span className="text-sm">GitHub</span>
               </a>
               <a
-                href="https://linkedin.com/in/alessandro"
+                href="https://linkedin.com/in/alepot55"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
               >
                 <Linkedin size={18} />
@@ -116,18 +122,24 @@ export default function Portfolio() {
           <div className="flex gap-6 sm:gap-8 justify-center flex-wrap">
             <a
               href="mailto:alessandro@example.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm"
             >
               Email
             </a>
             <a
               href="https://github.com/alessandro"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm"
             >
               GitHub
             </a>
             <a
               href="https://linkedin.com/in/alessandro"
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors text-sm"
             >
               LinkedIn
