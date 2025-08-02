@@ -13,7 +13,14 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "Alessandro - Computer Engineering Student",
   description: "Computer Engineering student specializing in AI/ML and GPU Computing",
-    generator: 'v0.dev'
+  generator: 'v0.dev',
+}
+
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 }
 
 export default function RootLayout({
