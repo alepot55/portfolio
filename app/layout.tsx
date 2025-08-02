@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Inter } from 'next/font/google'
 import { ThemeProvider } from "@/components/theme-provider"
+import { ViewportFix } from "@/components/viewport-fix"
 import "./globals.css"
 
 const inter = Inter({
@@ -21,6 +22,8 @@ export const viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  minimumScale: 1,
+  viewportFit: 'cover',
 }
 
 export default function RootLayout({
@@ -31,6 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className={inter.className}>
+        <ViewportFix />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
