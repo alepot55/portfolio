@@ -1,16 +1,16 @@
 export const experiences = [
   {
-    id: "huawei-seeds-for-the-future",
-    title: "Tech Program Global Finalist",
-    company: "Huawei (Seeds For The Future)",
-    period: "2023 - 2024",
-    description: "Selected for an elite tech program on AI & 5G; prototyped an AI mobile application to reduce food waste, leading the project to become a Global Finalist in the Tech4Good competition.",
+    id: "book-author",
+    title: "Technical Book Author",
+    company: "Neldiritto Editore",
+    period: "2025 - Present", // O la data precisa di inizio
+    description: "Commissioned to author a comprehensive Computer Science textbook for competitive exam preparation (Concorsi Pubblici). Deconstructed complex topics like Computer Architecture, OS, and Algorithms into rigorous yet accessible chapters.",
   },
   {
     id: "academic-mentor-tutor",
-    title: "Academic Mentor & Tutor",
+    title: "Academic Mentor & Technical Lead",
     company: "Self-Employed",
-    period: "2022 - Present",
-    description: "Delivered over 800 hours of mentoring in Machine Learning, Python, and Algorithms, guiding university students on thesis research and complex software development projects.",
+    period: "Feb 2022 - Present",
+    description: "Delivered over 800 hours of specialized mentorship in Machine Learning, Python, and Algorithms. Acting as a Technical Lead for university-level thesis projects, guiding students through architecture design and debugging.",
   },
 ];

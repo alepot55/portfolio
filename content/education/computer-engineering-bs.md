@@ -59,11 +59,17 @@ spec:
 - **Research Assistant**: AI/ML lab for 2 years
 - **Teaching Assistant**: Computer Architecture and Parallel Computing courses
 
+
 ### Key Achievements
 - ✅ 3.8/4.0 GPA with Dean's List recognition
 - ✅ 2 research publications with more in progress
 - ✅ Strong foundation in AI/ML and systems programming
 - ✅ Leadership experience in student organizations
+
+### Awards & Honors
+- 🏆 **Best Capstone Project Award** — Recognized for outstanding senior project in distributed machine learning (2025)
+- 🏅 **AI/ML Research Grant Recipient** — Awarded competitive grant for research in neural network optimization (2024)
+- 🥇 **First Place, HackAI Competition** — Led team to victory in national AI hackathon (2023)
 
 ---
 

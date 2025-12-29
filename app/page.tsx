@@ -2,9 +2,11 @@ import { ThemeToggle } from "@/components/theme-toggle"
 import { ProjectCard } from "@/components/project-card"
 import { ExperienceItem } from "@/components/experience-item"
 import { EducationItem } from "@/components/education-item"
+import { AchievementItem } from "@/components/achievement-item"
 import { projects } from "@/data/projects"
 import { experiences } from "@/data/experiences"
 import { education } from "@/data/education"
+import { achievements } from "@/data/achievements"
 import { skills } from "@/data/skills"
 import { Mail, Github, Linkedin, Download } from "lucide-react"
 
@@ -101,6 +103,16 @@ export default function Portfolio() {
             </div>
           </section>
         </div>
+
+        {/* Achievements Section */}
+        <section className="mb-16 sm:mb-20">
+          <h2 className="text-xl sm:text-2xl font-light mb-8 sm:mb-10 text-gray-900 dark:text-gray-100">Achievements</h2>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+            {achievements.map((achievement, index) => (
+              <AchievementItem key={index} achievement={achievement} />
+            ))}
+          </div>
+        </section>
 
         {/* Skills Section */}
         <section className="mb-16 sm:mb-20">
