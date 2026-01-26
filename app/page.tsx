@@ -8,6 +8,7 @@ import { experiences } from "@/data/experiences"
 import { education } from "@/data/education"
 import { achievements } from "@/data/achievements"
 import { skills } from "@/data/skills"
+import { hasContentFile } from "@/lib/content-utils"
 import { Mail, Github, Linkedin, Download } from "lucide-react"
 
 export default function Portfolio() {
@@ -74,7 +75,7 @@ export default function Portfolio() {
           <h2 className="text-xl sm:text-2xl font-light mb-8 sm:mb-10 text-gray-900 dark:text-gray-100">Projects</h2>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
             {projects.map((project, index) => (
-              <ProjectCard key={index} project={project} />
+              <ProjectCard key={index} project={project} hasContent={hasContentFile('projects', project.id)} />
             ))}
           </div>
         </section>
