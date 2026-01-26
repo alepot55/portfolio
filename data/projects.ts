@@ -1,5 +1,20 @@
 export const projects = [
   {
+    id: "flash-reasoning",
+    title: "Flash-Reasoning: Memory-Efficient Tree Attention",
+    description:
+      "Engineered a high-performance inference engine for System 2 Reasoning models (e.g., DeepSeek-R1). Implemented 'Tree-Aware Attention' with custom Fused GQA Triton kernels, achieving 1.33x physical HBM bandwidth (1194 GB/s) and a 96.6% VRAM reduction via physical memory deduplication.",
+    technologies: [
+      "OpenAI Triton",
+      "CUDA",
+      "PyTorch",
+      "Python",
+      "LLM Inference",
+    ],
+    period: "2026",
+    github: "https://github.com/alepot55/flash-reasoning",
+  },
+  {
     id: "flash-sae",
     title: "Flash-SAE: High-Performance Sparse Autoencoders",
     description:
