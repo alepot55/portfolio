@@ -1,5 +1,21 @@
 export const projects = [
   {
+    id: "flash-sae",
+    title: "Flash-SAE: High-Performance Sparse Autoencoders",
+    description:
+      "Engineered a highly optimized OpenAI Triton library for training Sparse Autoencoders, achieving a 13.6x speedup and 97% memory reduction over PyTorch. Implements custom fused kernels and 'Ghost Gradients' to accelerate Mechanistic Interpretability research.",
+    technologies: [
+      "OpenAI Triton",
+      "CUDA",
+      "PyTorch",
+      "Python",
+      "Mechanistic Interpretability",
+    ],
+    period: "2026",
+    github: "https://github.com/alepot55/flash-sae",
+  },
+
+  {
     id: "gpu-performance-analysis",
     title: "GPU Performance Analysis: Triton vs. CUDA",
     description:
