@@ -1,5 +1,20 @@
 export const projects = [
   {
+  id: "verify-cbl",
+  title: "Verify-CBL: Neuro-Symbolic Formal Verification Engine",
+  description:
+    "Built a formal verification engine combining Z3 SMT solver with LLM-powered code translation. Mathematically proves behavioral equivalence between legacy and modernized code, detecting 'penny drift' (rounding discrepancies) that testing misses. Achieved 100% accuracy on 42 benchmark cases with hybrid Z3/Monte Carlo verification.",
+  technologies: [
+    "Python",
+    "Z3 SMT Solver",
+    "LLM Integration",
+    "Formal Methods",
+    "Neuro-Symbolic AI",
+  ],
+  period: "2026",
+  github: "https://github.com/alepot55/verify-cbl",
+},
+  {
     id: "flash-reasoning",
     title: "Flash-Reasoning: Memory-Efficient Tree Attention",
     description:
@@ -86,21 +101,5 @@ export const projects = [
     technologies: ["JavaScript", "TypeScript", "NPM", "Node.js"],
     period: "2023",
     github: "https://github.com/alepot55/Chessboard.js",
-  },
-  // {
-  //   id: "predicting-obesity",
-  //   title: "Predicting Obesity with Multi-Output Classification",
-  //   description: "Built and evaluated multiple classification models (from Logistic Regression to LightGBM) to predict obesity levels based on lifestyle and health data, achieving over 90% accuracy.",
-  //   technologies: ["Python", "Scikit-learn", "Pandas", "XGBoost", "LightGBM"],
-  //   period: "2024",
-  // },
-  {
-    id: "freego-ai-concept",
-    title: "FreeGo: Award-Winning AI Concept for Food Waste",
-    description:
-      "Conceived and developed an award-winning AI mobile app concept to reduce food waste. Won 1st place in the local Huawei Tech4Good competition and advanced to become a Global Finalist.",
-    technologies: ["AI/ML Concept", "Prototyping", "UI/UX Design"],
-    period: "2023 - 2024",
-    github: "https://github.com/alepot55/freego.github.io",
-  },
+  }
 ];
