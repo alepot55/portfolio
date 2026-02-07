@@ -1,24 +1,19 @@
-import fs from "fs"
-import path from "path"
 import { notFound } from "next/navigation"
 import { MarkdownPage } from "@/components/markdown-page"
 import { experiences } from "@/data/experiences"
-
-// Fallback content for when markdown files don't exist
-const FILE_NOT_FOUND_CONTENT = "Page not found"
 
 async function getExperienceContent(id: string) {
   const experience = experiences.find((e) => e.id === id)
   if (!experience) return null
 
   try {
+    const fs = await import("fs")
+    const path = await import("path")
     const filePath = path.join(process.cwd(), "content/experiences", `${id}.md`)
     const content = fs.readFileSync(filePath, "utf8")
     return { ...experience, content }
-  } catch (error) {
-    console.log(`Using default content for experience: ${id}`)
-    const content = FILE_NOT_FOUND_CONTENT
-    return { ...experience, content }
+  } catch {
+    return null
   }
 }
 
@@ -32,10 +27,10 @@ export default async function ExperiencePage({ params }: { params: { id: string 
   return (
     <MarkdownPage
       title={experience.title}
-      subtitle={`${experience.company} • ${experience.period}`}
+      subtitle={`${experience.company} · ${experience.period}`}
       content={experience.content}
       backHref="/"
-      backLabel="Back to Portfolio"
+      backLabel="Portfolio"
     />
   )
 }
