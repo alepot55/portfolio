@@ -1,19 +1,35 @@
 export const projects = [
   {
-  id: "verify-cbl",
-  title: "Verify-CBL: Neuro-Symbolic Formal Verification Engine",
-  description:
-    "Built a formal verification engine combining Z3 SMT solver with LLM-powered code translation. Mathematically proves behavioral equivalence between legacy and modernized code, detecting 'penny drift' (rounding discrepancies) that testing misses. Achieved 100% accuracy on 42 benchmark cases with hybrid Z3/Monte Carlo verification.",
-  technologies: [
-    "Python",
-    "Z3 SMT Solver",
-    "LLM Integration",
-    "Formal Methods",
-    "Neuro-Symbolic AI",
-  ],
-  period: "2026",
-  github: "https://github.com/alepot55/verify-cbl",
-},
+    id: "verify-cbl",
+    title: "Verify-CBL: Neuro-Symbolic Formal Verification Engine",
+    description:
+      "Built a formal verification engine combining Z3 SMT solver with LLM-powered code translation. Mathematically proves behavioral equivalence between legacy and modernized code, detecting 'penny drift' (rounding discrepancies) that testing misses. Achieved 100% accuracy on 42 benchmark cases with hybrid Z3/Monte Carlo verification.",
+    technologies: [
+      "Python",
+      "Z3 SMT Solver",
+      "LLM Integration",
+      "Formal Methods",
+      "Neuro-Symbolic AI",
+    ],
+    period: "2026",
+    github: "https://github.com/alepot55/verify-cbl",
+  },
+  {
+    id: "agentrial",
+    title: "agentrial: Statistical Evaluation Framework for AI Agents",
+    description:
+      "Created and published an open-source framework that brings statistical rigor to AI agent evaluation. Runs agents N times with Wilson confidence intervals, step-level failure attribution via Fisher exact test, and real cost tracking across 45+ models. Includes CI/CD integration, production drift detection (CUSUM/Page-Hinkley), LLM-as-Judge with Krippendorff's alpha calibration, and a VS Code extension. 450 tests, 6 framework adapters.",
+    technologies: [
+      "Python",
+      "Statistics",
+      "LLM APIs",
+      "FastAPI",
+      "VS Code Extension",
+      "CI/CD",
+    ],
+    period: "2026",
+    github: "https://github.com/alepot55/agentrial",
+  },
   {
     id: "flash-reasoning",
     title: "Flash-Reasoning: Memory-Efficient Tree Attention",
@@ -44,7 +60,6 @@ export const projects = [
     period: "2026",
     github: "https://github.com/alepot55/flash-sae",
   },
-
   {
     id: "gpu-performance-analysis",
     title: "GPU Performance Analysis: Triton vs. CUDA",
@@ -101,5 +116,5 @@ export const projects = [
     technologies: ["JavaScript", "TypeScript", "NPM", "Node.js"],
     period: "2023",
     github: "https://github.com/alepot55/Chessboard.js",
-  }
+  },
 ];
