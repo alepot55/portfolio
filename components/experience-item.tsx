@@ -1,6 +1,6 @@
-import Link from "next/link"
-import { hasContentFile } from "@/lib/content-utils"
+"use client"
 
+import { motion } from "framer-motion"
 interface Experience {
   id: string
   title: string
@@ -11,33 +11,27 @@ interface Experience {
 
 interface ExperienceItemProps {
   experience: Experience
+  index?: number
 }
 
-export function ExperienceItem({ experience }: ExperienceItemProps) {
-  const hasContent = hasContentFile('experiences', experience.id)
-  
+export function ExperienceItem({ experience, index = 0 }: ExperienceItemProps) {
+
   const content = (
-    <div className="hover:bg-gray-50 dark:hover:bg-gray-900/50 p-3 sm:p-4 -m-3 sm:-m-4 transition-colors rounded-lg">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start mb-2 gap-1">
-        <h3 className={`text-sm sm:text-base font-light text-gray-900 dark:text-gray-100 transition-colors ${
-          hasContent ? 'group-hover:text-gray-600 dark:group-hover:text-gray-400' : ''
-        }`}>
-          {experience.title}
-        </h3>
-        <span className="text-xs text-gray-500 dark:text-gray-500 flex-shrink-0">{experience.period}</span>
-      </div>
-      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{experience.company}</p>
+    <motion.div
+      initial={{ opacity: 0, y: 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.1 }}
+      className="relative pl-6 border-l-2 border-gray-200 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 transition-colors"
+    >
+      <div className="absolute -left-[5px] top-1.5 w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-600" />
+      <span className="text-xs text-gray-400 dark:text-gray-500 font-medium">{experience.period}</span>
+      <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mt-1">
+        {experience.title}
+      </h3>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-1.5">{experience.company}</p>
       <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{experience.description}</p>
-    </div>
+    </motion.div>
   )
 
-  if (hasContent) {
-    return (
-      <Link href={`/experience/${experience.id}`} className="group block">
-        {content}
-      </Link>
-    )
-  }
-
-  return <div className="block">{content}</div>
+  return content
 }

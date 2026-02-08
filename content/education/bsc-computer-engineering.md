@@ -1,27 +1,31 @@
-Undergraduate program providing a rigorous foundation in computer engineering, software systems, and applied artificial intelligence.
+## The Foundation
 
-### Core Areas
-- Algorithms & Data Structures
-- Computer Architecture & Organization
-- Operating Systems & Distributed Systems
-- Database Systems & Data Management
-- Signals, Control, and Embedded Systems basics
+Sapienza gave me a rigorous grounding in computer engineering fundamentals: from transistors to operating systems, from data structures to distributed systems. The curriculum was broad by design — and that breadth turned out to be invaluable.
 
-### AI / ML Emphasis
-- Intro & intermediate Machine Learning
-- Fundamentals of Deep Learning
-- Computer Vision foundations
+## What I Studied
 
-### Thesis
-Researched 3D reconstruction using Gaussian Splatting for SLAM pipelines, focusing on:
-- Efficient point-based radiance field representations
-- Real-time incremental scene updates
-- Evaluation on indoor dynamic sequences
+The core areas spanned the full stack:
 
-### Key Achievements
-- Graduated with Highest Distinction (110/110 with Honors)
-- Research assistant in AI/ML lab (2 years)
-- Teaching assistant for Computer Architecture & Parallel Computing
+- **Algorithms & Data Structures** — complexity theory, graph algorithms, dynamic programming
+- **Computer Architecture** — CPU pipelines, cache hierarchies, memory systems
+- **Operating Systems** — process scheduling, virtual memory, file systems, concurrency
+- **Database Systems** — relational algebra, SQL optimization, transaction isolation
+- **Signal Processing & Control** — the mathematical foundations that later proved essential for computer vision
 
----
-**Period:** 2021–2024
+## The Turn Toward AI
+
+In my second year, I took introductory ML courses and was immediately drawn to the intersection of systems and intelligence. I started exploring deep learning independently, which led to opportunities in the AI/ML lab as a research assistant.
+
+## Thesis: SplatSLAM
+
+My thesis research pioneered real-time 3D reconstruction using Gaussian Splatting for SLAM pipelines. The project involved:
+
+- Adapting Nerfstudio's offline rendering pipeline into a real-time incremental system
+- Implementing photometric tracking for camera pose estimation
+- Evaluating the system on indoor dynamic sequences
+
+This work was developed within Sapienza's **Honors Program** (top 1% of students) and directly led to my interest in GPU kernel optimization.
+
+## Graduating
+
+I graduated with **110/110 cum Laude** (highest distinction). The experience at Sapienza was defined by two things: the rigor of the engineering curriculum and the freedom to explore AI research alongside it. Both shaped everything I've done since.

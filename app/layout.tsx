@@ -1,28 +1,47 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from 'next/font/google'
+import localFont from "next/font/local"
 import { ThemeProvider } from "@/components/theme-provider"
-import { ViewportFix } from "@/components/viewport-fix"
 import "./globals.css"
 
-const inter = Inter({
-  subsets: ["latin"],
+const geistSans = localFont({
+  src: [
+    {
+      path: "../node_modules/geist/dist/fonts/geist-sans/Geist-Regular.woff2",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/geist/dist/fonts/geist-sans/Geist-Medium.woff2",
+      weight: "500",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/geist/dist/fonts/geist-sans/Geist-SemiBold.woff2",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/geist/dist/fonts/geist-sans/Geist-Bold.woff2",
+      weight: "700",
+      style: "normal",
+    },
+  ],
+  variable: "--font-sans",
   display: "swap",
-  variable: "--font-inter",
 })
 
 export const metadata: Metadata = {
   title: "Alessandro Potenza",
-  description: "Computer Engineering student specializing in AI/ML and GPU Computing"
+  description: "Computer Engineering student specializing in AI/ML and GPU Computing",
 }
 
 export const viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  minimumScale: 1,
-  viewportFit: 'cover',
+  maximumScale: 5,
+  userScalable: true,
+  viewportFit: "cover",
 }
 
 export default function RootLayout({
@@ -31,9 +50,8 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className={inter.className}>
-        <ViewportFix />
+    <html lang="en" className={geistSans.variable} suppressHydrationWarning>
+      <body className="font-sans antialiased">
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

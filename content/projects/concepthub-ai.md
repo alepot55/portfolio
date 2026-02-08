@@ -1,31 +1,33 @@
-**ConceptHub** is a dynamic web platform built for book enthusiasts, students, and anyone passionate about reading and knowledge sharing.  It provides a space to **discover, create, and share mind maps, quotes, and insightful notes** inspired by the books you read.  Visit the live application at [https://concepthub-chi.vercel.app/](https://concepthub-chi.vercel.app/).
+## Motivation
 
-**Unlock Deeper Understanding and Collaborative Learning**
+I wanted to explore AI-powered content generation in a practical context: helping people extract structured knowledge from books. The idea was simple — upload a text, and the platform generates summaries, key concepts, and visual mind maps automatically.
 
-ConceptHub goes beyond simply listing books. It empowers users to:
+## What It Does
 
-*   **Visually Organize Knowledge with Interactive Mind Maps:**  Create and explore interactive mind maps to visually represent the key concepts, characters, plotlines, and themes within a book. Mind maps are a powerful tool for understanding complex information and seeing the connections between ideas.
-*   **Capture and Share Powerful Quotes:**  Highlight and save impactful quotes that resonate with you. Share these quotes with the ConceptHub community and discover meaningful passages from books shared by others.
-*   **Develop and Share Personal Insights:**  Go beyond summaries.  Use ConceptHub to articulate and share your own unique insights, reflections, and analyses inspired by your reading. Engage in discussions and learn from the perspectives of other readers.
-*   **Search and Discover:**  Easily search for books, mind maps, quotes, and insights within the platform. Discover new reading recommendations and explore how others have interpreted and engaged with the books you love.
-*   **Connect with a Community of Readers:**  Share your passion for reading with a community of like-minded individuals.  Discover new books, exchange ideas, and expand your understanding through collaborative learning.
+**ConceptHub** is a full-stack web platform where users can:
 
-**Built with Modern Web Technologies:**
+- **Generate AI summaries** from book texts using Google's Gemini API
+- **Create interactive mind maps** that visually organize key concepts, themes, and relationships
+- **Save and share quotes** with annotations
+- **Build a knowledge base** with persistent storage and search
 
-ConceptHub is developed using a modern and performant technology stack, ensuring a smooth and engaging user experience:
+The platform handles the entire flow: text input, AI processing, structured output, and collaborative sharing.
 
-*   **Frontend Framework: React:**  Built with React, a leading JavaScript library for user interface development, ConceptHub offers a dynamic, responsive, and user-friendly interface. React's component-based architecture allows for efficient development and a highly interactive experience.
-*   **Programming Language: TypeScript:**  Utilizing TypeScript, a superset of JavaScript that adds static typing, ensures code robustness, maintainability, and scalability. TypeScript enhances developer productivity and helps prevent errors.
-*   **Database: Vercel Database (SQL Queries):**  Data persistence and retrieval are handled efficiently using a database hosted on Vercel.  The application leverages SQL queries to interact with the database, ensuring data integrity and efficient data management for book information, user-generated content, and platform functionality.
+## Architecture
 
-**Explore ConceptHub Today!**
+The technical stack reflects the choices I made to balance development speed with production quality:
 
-Visit [https://concepthub-chi.vercel.app/](https://concepthub-chi.vercel.app/) to experience the platform firsthand.  Start creating mind maps, sharing quotes, and connecting with readers.
+- **Frontend**: React + TypeScript for type-safe, component-driven UI development
+- **Backend**: Python service handling Gemini API integration and text processing
+- **Database**: PostgreSQL on Vercel with SQL queries for data persistence
+- **Infrastructure**: Docker containers deployed on GCP, with the frontend on Vercel
 
-**Future Development:**
+User authentication, session management, and content persistence are fully implemented — this isn't a demo, it's a functional platform.
 
-While ConceptHub is already a functional platform, future development may explore enhancements such as:
+## What I Learned
 
-*   **Improved Mind Map Features:**  Expanding mind map functionality with more customization options, collaboration features, and export capabilities.
-*   **Enhanced Search and Filtering:**  Refining search capabilities to allow for more granular discovery of content.
-*   **Community Features:**  Adding features to further enhance community interaction, such as user profiles, following other users, and direct messaging.
+This was my first full-stack project integrating a production LLM API. The main lessons:
+
+- **Prompt engineering matters more than model choice** for structured output generation. Getting Gemini to produce consistent mind map structures required careful few-shot prompting.
+- **SQL over NoSQL for structured content**: mind maps, quotes, and annotations have clear relational structure. PostgreSQL was the right choice over a document store.
+- **Deployment complexity scales non-linearly**: Docker + GCP + Vercel worked well, but the operational overhead of managing multiple services was significantly higher than expected for a project this size.
