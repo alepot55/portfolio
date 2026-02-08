@@ -1,5 +1,6 @@
 "use client"
 
+import { useState } from "react"
 import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react"
 import { motion } from "framer-motion"
 import { ThemeToggle } from "./theme-toggle"
@@ -8,24 +9,38 @@ import { ExperienceItem } from "./experience-item"
 import { EducationItem } from "./education-item"
 import { AchievementItem } from "./achievement-item"
 import { SkillsChart } from "./skills-chart"
+import { CATEGORY_LABELS } from "@/lib/constants"
 import type { Project } from "@/data/projects"
+import type { Experience, Education, Achievement } from "@/lib/constants"
 
 interface PortfolioPageProps {
   projects: Project[]
-  experiences: any[]
-  education: any[]
-  achievements: any[]
+  experiences: Experience[]
+  education: Education[]
+  achievements: Achievement[]
   skills: Record<string, string[]>
   projectContentMap: Record<string, boolean>
 }
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function SectionHeading({ children, id }: { children: React.ReactNode; id?: string }) {
   return (
-    <h2 className="text-xs font-semibold uppercase tracking-widest text-gray-400 dark:text-gray-500 mb-8">
+    <h2
+      id={id}
+      className="text-sm font-semibold uppercase tracking-widest text-gray-500 dark:text-gray-400 mb-8 flex items-center gap-3"
+    >
+      <span className="h-px w-6 bg-gray-300 dark:bg-gray-700" aria-hidden="true" />
       {children}
     </h2>
   )
 }
+
+const FILTER_OPTIONS = [
+  { key: "all", label: "All" },
+  { key: "ai-ml", label: CATEGORY_LABELS["ai-ml"] },
+  { key: "systems", label: CATEGORY_LABELS["systems"] },
+  { key: "web", label: CATEGORY_LABELS["web"] },
+  { key: "research", label: CATEGORY_LABELS["research"] },
+]
 
 export function PortfolioPage({
   projects,
@@ -35,23 +50,30 @@ export function PortfolioPage({
   skills,
   projectContentMap,
 }: PortfolioPageProps) {
+  const [activeFilter, setActiveFilter] = useState("all")
+
   const featuredProjects = projects.filter((p) => p.featured)
   const otherProjects = projects.filter((p) => !p.featured)
+  const filteredProjects =
+    activeFilter === "all"
+      ? otherProjects
+      : otherProjects.filter((p) => p.category === activeFilter)
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* Fixed Header */}
-      <header className="fixed top-0 right-0 left-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md z-50 border-b border-transparent">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          <span className="text-sm font-semibold text-gray-900 dark:text-gray-100 tracking-tight">
+      <header className="fixed top-0 right-0 left-0 bg-white/80 dark:bg-gray-950/80 backdrop-blur-md z-50 border-b border-gray-100 dark:border-gray-900">
+        <nav className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center" aria-label="Main navigation">
+          <a href="#" className="text-sm font-bold text-gray-900 dark:text-gray-100 tracking-tight hover:opacity-80 transition-opacity">
             AP
-          </span>
-          <div className="flex items-center gap-4">
+          </a>
+          <div className="flex items-center gap-1 sm:gap-3">
             <a
               href="https://github.com/alepot55"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              aria-label="GitHub profile"
             >
               <Github size={18} />
             </a>
@@ -59,19 +81,21 @@ export function PortfolioPage({
               href="https://linkedin.com/in/alepot55"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              aria-label="LinkedIn profile"
             >
               <Linkedin size={18} />
             </a>
             <a
               href="mailto:ap.alessandro.potenza@gmail.com"
-              className="text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              className="p-2 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+              aria-label="Send email"
             >
               <Mail size={18} />
             </a>
             <ThemeToggle />
           </div>
-        </div>
+        </nav>
       </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -82,12 +106,12 @@ export function PortfolioPage({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.25, 0.4, 0.25, 1] }}
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight mb-5">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight mb-5 text-balance">
               Alessandro Potenza
             </h1>
-            <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed mb-8">
+            <p className="text-lg sm:text-xl text-gray-500 dark:text-gray-400 max-w-2xl leading-relaxed mb-10">
               Computer Engineering student at{" "}
-              <span className="text-gray-700 dark:text-gray-300">Politecnico di Milano</span>,
+              <span className="text-gray-800 dark:text-gray-200 font-medium">Politecnico di Milano</span>,
               building high-performance AI systems, GPU kernels, and open-source tools.
             </p>
           </motion.div>
@@ -98,6 +122,8 @@ export function PortfolioPage({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.15 }}
             className="flex flex-wrap gap-8 sm:gap-12"
+            role="list"
+            aria-label="Key statistics"
           >
             {[
               { value: "9", label: "Projects" },
@@ -105,11 +131,11 @@ export function PortfolioPage({
               { value: "110/110", label: "cum Laude" },
               { value: "Top 1.5%", label: "AI Challenge" },
             ].map((stat) => (
-              <div key={stat.label}>
-                <p className="text-2xl sm:text-3xl font-semibold text-gray-900 dark:text-gray-100">
+              <div key={stat.label} role="listitem">
+                <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
                   {stat.value}
                 </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider mt-0.5">
+                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1">
                   {stat.label}
                 </p>
               </div>
@@ -118,8 +144,8 @@ export function PortfolioPage({
         </section>
 
         {/* Featured Projects */}
-        <section className="pb-16 sm:pb-24">
-          <SectionHeading>Featured Projects</SectionHeading>
+        <section className="pb-16 sm:pb-24" aria-labelledby="featured-projects">
+          <SectionHeading id="featured-projects">Featured Projects</SectionHeading>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {featuredProjects.map((project, index) => (
               <ProjectCard
@@ -133,10 +159,30 @@ export function PortfolioPage({
         </section>
 
         {/* All Projects */}
-        <section className="pb-16 sm:pb-24">
-          <SectionHeading>All Projects</SectionHeading>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {otherProjects.map((project, index) => (
+        <section className="pb-16 sm:pb-24" aria-labelledby="all-projects">
+          <SectionHeading id="all-projects">All Projects</SectionHeading>
+
+          {/* Category Filter Tabs */}
+          <div className="flex flex-wrap gap-2 mb-8" role="tablist" aria-label="Filter projects by category">
+            {FILTER_OPTIONS.map((option) => (
+              <button
+                key={option.key}
+                role="tab"
+                aria-selected={activeFilter === option.key}
+                onClick={() => setActiveFilter(option.key)}
+                className={`text-xs font-medium px-3.5 py-1.5 rounded-full transition-all duration-200 ${
+                  activeFilter === option.key
+                    ? "bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700"
+                }`}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5" role="tabpanel">
+            {filteredProjects.map((project, index) => (
               <ProjectCard
                 key={project.id}
                 project={project}
@@ -144,12 +190,17 @@ export function PortfolioPage({
                 index={index}
               />
             ))}
+            {filteredProjects.length === 0 && (
+              <p className="text-sm text-gray-400 dark:text-gray-500 col-span-full py-8 text-center">
+                No projects in this category yet.
+              </p>
+            )}
           </div>
         </section>
 
         {/* Skills */}
-        <section className="pb-16 sm:pb-24">
-          <SectionHeading>Skills</SectionHeading>
+        <section className="pb-16 sm:pb-24" aria-labelledby="skills">
+          <SectionHeading id="skills">Skills</SectionHeading>
           <div className="max-w-3xl">
             <SkillsChart skills={skills} />
           </div>
@@ -157,8 +208,8 @@ export function PortfolioPage({
 
         {/* Experience + Education Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 pb-16 sm:pb-24">
-          <section>
-            <SectionHeading>Experience</SectionHeading>
+          <section aria-labelledby="experience">
+            <SectionHeading id="experience">Experience</SectionHeading>
             <div className="space-y-8">
               {experiences.map((experience, index) => (
                 <ExperienceItem key={experience.id} experience={experience} index={index} />
@@ -166,8 +217,8 @@ export function PortfolioPage({
             </div>
           </section>
 
-          <section>
-            <SectionHeading>Education</SectionHeading>
+          <section aria-labelledby="education">
+            <SectionHeading id="education">Education</SectionHeading>
             <div className="space-y-8">
               {education.map((edu, index) => (
                 <EducationItem key={edu.id} education={edu} index={index} />
@@ -177,8 +228,8 @@ export function PortfolioPage({
         </div>
 
         {/* Achievements */}
-        <section className="pb-16 sm:pb-24">
-          <SectionHeading>Achievements</SectionHeading>
+        <section className="pb-16 sm:pb-24" aria-labelledby="achievements">
+          <SectionHeading id="achievements">Achievements</SectionHeading>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
             {achievements.map((achievement, index) => (
               <AchievementItem key={achievement.id} achievement={achievement} index={index} />
@@ -187,15 +238,15 @@ export function PortfolioPage({
         </section>
 
         {/* Footer */}
-        <footer className="border-t border-gray-200 dark:border-gray-800 py-8 sm:py-12">
+        <footer className="border-t border-gray-200 dark:border-gray-800 py-10 sm:py-14">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-gray-400 dark:text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">
               Alessandro Potenza
             </p>
             <div className="flex gap-6">
               <a
                 href="mailto:ap.alessandro.potenza@gmail.com"
-                className="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1.5"
               >
                 Email <ArrowUpRight size={12} />
               </a>
@@ -203,7 +254,7 @@ export function PortfolioPage({
                 href="https://github.com/alepot55"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1.5"
               >
                 GitHub <ArrowUpRight size={12} />
               </a>
@@ -211,7 +262,7 @@ export function PortfolioPage({
                 href="https://linkedin.com/in/alepot55"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-sm text-gray-400 dark:text-gray-500 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1"
+                className="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 transition-colors flex items-center gap-1.5"
               >
                 LinkedIn <ArrowUpRight size={12} />
               </a>

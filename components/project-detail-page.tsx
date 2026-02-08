@@ -10,17 +10,11 @@ import { FeatureGrid } from "./feature-grid"
 import { ProjectChart } from "./project-chart"
 import { FadeIn } from "./motion-wrapper"
 import type { Project } from "@/data/projects"
+import { CATEGORY_LABELS_FULL } from "@/lib/constants"
 
 interface ProjectDetailPageProps {
   project: Project
   content: string
-}
-
-const CATEGORY_LABELS: Record<string, string> = {
-  "ai-ml": "AI / Machine Learning",
-  systems: "Systems / GPU",
-  web: "Web Development",
-  research: "Research",
 }
 
 export function ProjectDetailPage({ project, content }: ProjectDetailPageProps) {
@@ -69,8 +63,8 @@ export function ProjectDetailPage({ project, content }: ProjectDetailPageProps) 
         <section className="pt-10 sm:pt-16 pb-8 sm:pb-12">
           <FadeIn>
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-xs font-medium uppercase tracking-widest text-gray-400 dark:text-gray-500">
-                {CATEGORY_LABELS[project.category] || project.category}
+              <span className="text-xs font-medium uppercase tracking-widest text-gray-500 dark:text-gray-400">
+                {CATEGORY_LABELS_FULL[project.category] || project.category}
               </span>
               <span className="text-gray-300 dark:text-gray-700">|</span>
               <span className="text-xs text-gray-400 dark:text-gray-500">{project.period}</span>
