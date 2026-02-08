@@ -2,15 +2,35 @@
 
 import Link from "next/link"
 import { ArrowLeft, Github, ExternalLink } from "lucide-react"
-import { motion } from "framer-motion"
 import { ThemeToggle } from "./theme-toggle"
 import { MarkdownRenderer } from "./markdown-renderer"
-import { MetricCard } from "./metric-card"
-import { FeatureGrid } from "./feature-grid"
 import { ProjectChart } from "./project-chart"
 import { FadeIn } from "./motion-wrapper"
 import type { Project } from "@/data/projects"
 import { CATEGORY_LABELS_FULL } from "@/lib/constants"
+import { ChessboardDemo } from "./custom-sections/chessboard-demo"
+import { SplatSLAMShowcase } from "./custom-sections/splat-slam-showcase"
+import { VerificationPipeline } from "./custom-sections/verification-pipeline"
+import { FlashReasoningCharts } from "./custom-sections/flash-reasoning-charts"
+import { FlashSAECharts } from "./custom-sections/flash-sae-charts"
+import { TerminalShowcase } from "./custom-sections/terminal-showcase"
+import { ConfusionMatrixViz } from "./custom-sections/confusion-matrix-viz"
+import { ConceptHubDemo } from "./custom-sections/concepthub-demo"
+import type { ComponentType } from "react"
+
+const CUSTOM_SECTIONS: Record<string, ComponentType<{ project: Project }>> = {
+  "chessboard-js": ChessboardDemo,
+  "slam-gaussian-splatting": SplatSLAMShowcase,
+  "verify-cbl": VerificationPipeline,
+  "agentrial": TerminalShowcase,
+  "music-genre-classification": ConfusionMatrixViz,
+  "concepthub-ai": ConceptHubDemo,
+}
+
+const CUSTOM_CHARTS: Record<string, ComponentType<{ project: Project }>> = {
+  "flash-reasoning": FlashReasoningCharts,
+  "flash-sae": FlashSAECharts,
+}
 
 interface ProjectDetailPageProps {
   project: Project
@@ -18,6 +38,9 @@ interface ProjectDetailPageProps {
 }
 
 export function ProjectDetailPage({ project, content }: ProjectDetailPageProps) {
+  const CustomSection = CUSTOM_SECTIONS[project.id]
+  const CustomCharts = CUSTOM_CHARTS[project.id]
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
       {/* Sticky Header */}
@@ -94,48 +117,23 @@ export function ProjectDetailPage({ project, content }: ProjectDetailPageProps) 
           </FadeIn>
         </section>
 
-        {/* Metrics Section */}
-        {project.metrics && project.metrics.length > 0 && (
+        {/* Custom Section */}
+        {CustomSection && (
           <section className="pb-8 sm:pb-12">
-            <div className={`grid gap-4 ${
-              project.metrics.length === 2 ? "grid-cols-2" :
-              project.metrics.length === 3 ? "grid-cols-1 sm:grid-cols-3" :
-              "grid-cols-2 lg:grid-cols-4"
-            }`}>
-              {project.metrics.map((metric, index) => (
-                <MetricCard
-                  key={metric.label}
-                  label={metric.label}
-                  value={metric.value}
-                  description={metric.description}
-                  index={index}
-                />
-              ))}
-            </div>
+            <CustomSection project={project} />
           </section>
         )}
 
-        {/* Chart + Features Layout */}
-        {(project.chartData || project.features) && (
+        {/* Charts Section */}
+        {(CustomCharts || (project.chartData && project.chartLabel)) && (
           <section className="pb-8 sm:pb-12">
-            <div className={`grid gap-6 ${project.chartData && project.features ? "lg:grid-cols-2" : ""}`}>
-              {project.chartData && project.chartLabel && (
+            {CustomCharts ? (
+              <CustomCharts project={project} />
+            ) : (
+              project.chartData && project.chartLabel && (
                 <ProjectChart data={project.chartData} label={project.chartLabel} />
-              )}
-              {project.features && (
-                <div>
-                  <motion.h3
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.2 }}
-                    className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-4"
-                  >
-                    Key Features
-                  </motion.h3>
-                  <FeatureGrid features={project.features} />
-                </div>
-              )}
-            </div>
+              )
+            )}
           </section>
         )}
 

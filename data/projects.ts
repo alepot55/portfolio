@@ -51,18 +51,6 @@ export const projects: Project[] = [
     github: "https://github.com/alepot55/agentrial",
     featured: true,
     category: "ai-ml",
-    metrics: [
-      { label: "Tests Passing", value: "450", description: "Full test suite" },
-      { label: "Framework Adapters", value: "6", description: "LangGraph, CrewAI, AutoGen, Pydantic AI, OpenAI Agents SDK, smolagents" },
-      { label: "Models Tracked", value: "45+", description: "Real cost tracking" },
-      { label: "License", value: "MIT", description: "Open source" },
-    ],
-    features: [
-      { title: "Statistical Rigor", description: "Wilson confidence intervals and Fisher exact test for step-level failure attribution" },
-      { title: "Production Monitoring", description: "CUSUM, Page-Hinkley, and KS drift detectors for real-time regression detection" },
-      { title: "Agent Reliability Score", description: "Composite 0-100 score with Pareto frontier analysis and prompt version control" },
-      { title: "MCP Security Scanner", description: "Built-in security scanning for Model Context Protocol integrations" },
-    ],
   },
   {
     id: "flash-reasoning",
@@ -80,18 +68,6 @@ export const projects: Project[] = [
     github: "https://github.com/alepot55/flash-reasoning",
     featured: true,
     category: "systems",
-    metrics: [
-      { label: "Speedup", value: "2.54x", description: "vs standard attention" },
-      { label: "VRAM Reduction", value: "96.6%", description: "Physical memory deduplication" },
-      { label: "Effective BW", value: "1194 GB/s", description: "Exceeds 900 GB/s HBM limit via L2 cache" },
-      { label: "Tests", value: "9", description: "Correctness tests passing" },
-    ],
-    features: [
-      { title: "Physical Prefix Sharing", description: "Reference-counted KV blocks eliminate O(n×b) memory waste from shared prefixes" },
-      { title: "Fused GQA Kernel", description: "Single Triton kernel fusing gather + GQA expansion + scaled dot-product attention" },
-      { title: "Online Softmax", description: "FlashAttention-style numerically stable softmax without materialization" },
-      { title: "Triton Autotuning", description: "Automatic kernel parameter optimization for A100/H100/RTX architectures" },
-    ],
     chartData: [
       { name: "Standard Attn", value: 470, unit: "GB/s" },
       { name: "Flash-Reasoning", value: 1194, unit: "GB/s" },
@@ -115,18 +91,6 @@ export const projects: Project[] = [
     github: "https://github.com/alepot55/flash-sae",
     featured: true,
     category: "systems",
-    metrics: [
-      { label: "Decoder Speedup", value: "13.6x", description: "Sparse gather operations" },
-      { label: "Memory Saved", value: "97%", description: "Never materializes dense activations" },
-      { label: "Full Forward", value: "1.78x", description: "End-to-end speedup" },
-      { label: "Tests", value: "19/19", description: "All tests passing" },
-    ],
-    features: [
-      { title: "Sparse Kernel Fusion", description: "Fused top-k selection + sparse gather eliminates dense intermediate tensors" },
-      { title: "Ghost Gradients", description: "Novel dead latent recovery mechanism for training stability" },
-      { title: "FP8 Quantization", description: "Ada Lovelace+ GPU support for further memory reduction" },
-      { title: "Drop-in Replacement", description: "Full autograd compatibility — swap one import and get 13x speedup" },
-    ],
     chartData: [
       { name: "Encoder", value: 1.06, baseline: 1.0 },
       { name: "Decoder", value: 13.6, baseline: 1.0 },
@@ -149,15 +113,6 @@ export const projects: Project[] = [
     period: "2026",
     github: "https://github.com/alepot55/verify-cbl",
     category: "ai-ml",
-    metrics: [
-      { label: "Accuracy", value: "100%", description: "42 benchmark cases" },
-      { label: "Approach", value: "Hybrid", description: "Z3 + Monte Carlo verification" },
-    ],
-    features: [
-      { title: "SMT Solving", description: "Z3 theorem prover for mathematical equivalence proofs" },
-      { title: "LLM Translation", description: "AI-powered code translation between legacy and modern languages" },
-      { title: "Penny Drift Detection", description: "Catches rounding discrepancies that traditional testing misses" },
-    ],
   },
   {
     id: "gpu-performance-analysis",
@@ -167,13 +122,6 @@ export const projects: Project[] = [
     technologies: ["Python", "C++", "CUDA", "Triton", "PyTorch"],
     period: "2025",
     category: "research",
-    metrics: [
-      { label: "CUDA Advantage", value: "220x", description: "For irregular workloads" },
-    ],
-    features: [
-      { title: "Comprehensive Benchmarking", description: "Systematic comparison across regular and irregular GPU workloads" },
-      { title: "FSM Analysis", description: "Deep dive into finite state machine kernel performance characteristics" },
-    ],
     chartData: [
       { name: "Regular Workload", value: 1.2, baseline: 1.0 },
       { name: "Irregular (FSM)", value: 220, baseline: 1.0 },
@@ -196,12 +144,6 @@ export const projects: Project[] = [
     period: "2024",
     github: "https://github.com/alepot55/SplatSLAM",
     category: "research",
-    features: [
-      { title: "RGB-Only Operation", description: "No depth sensors required — works with standard monocular video" },
-      { title: "Real-time SLAM", description: "Simultaneous tracking and photorealistic 3D mapping" },
-      { title: "Gaussian Splatting", description: "State-of-the-art neural rendering for high-fidelity reconstruction" },
-      { title: "Nerfstudio Integration", description: "Built as extension to the open-source Nerfstudio project" },
-    ],
   },
   {
     id: "concepthub-ai",
@@ -220,11 +162,6 @@ export const projects: Project[] = [
     period: "2024",
     liveUrl: "https://concepthub-chi.vercel.app/",
     category: "web",
-    features: [
-      { title: "AI Summarization", description: "Gemini-powered book summaries and concept extraction" },
-      { title: "Mind Map Generation", description: "Automatic conceptual mind maps from text content" },
-      { title: "Full-Stack Architecture", description: "React frontend, Python backend, PostgreSQL database on GCP" },
-    ],
   },
   {
     id: "music-genre-classification",
@@ -235,15 +172,6 @@ export const projects: Project[] = [
     period: "2024",
     github: "https://github.com/alepot55/MGC-GTZAN",
     category: "ai-ml",
-    metrics: [
-      { label: "Test Accuracy", value: "83.5%", description: "SOTA on GTZAN" },
-      { label: "CV Mean", value: "~90%", description: "Cross-validation" },
-    ],
-    features: [
-      { title: "Leak-Free Pipeline", description: "Track-level 60/20/20 split before audio slicing prevents data leakage" },
-      { title: "U-Net Architecture", description: "Custom U-Net encoder achieving state-of-the-art classification" },
-      { title: "Transfer Learning", description: "Strong generalization to Indian Classical Music and Tabla Taala datasets" },
-    ],
   },
   {
     id: "chessboard-js",
@@ -255,11 +183,5 @@ export const projects: Project[] = [
     github: "https://github.com/alepot55/Chessboard.js",
     liveUrl: "https://sites.google.com/view/chessboard-js/home",
     category: "web",
-    features: [
-      { title: "Zero Dependencies", description: "Lightweight, dependency-free library" },
-      { title: "Rich API", description: "Position management, move control, FEN support, game history" },
-      { title: "Interactive", description: "Drag-and-drop, click-to-move, animations, legal move enforcement" },
-      { title: "NPM Package", description: "Published as @alepot55/chessboardjs on npm" },
-    ],
   },
 ];

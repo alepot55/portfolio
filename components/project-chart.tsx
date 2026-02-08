@@ -40,9 +40,11 @@ function CustomTooltip({ active, payload }: any) {
 }
 
 export function ProjectChart({ data, label }: ProjectChartProps) {
-  const hasReferenceLine = data.some(d => d.name === "HBM Limit")
-  const referenceValue = data.find(d => d.name === "HBM Limit")?.value
-  const chartData = hasReferenceLine ? data.filter(d => d.name !== "HBM Limit") : data
+  const hasHBMLine = data.some(d => d.name === "HBM Limit")
+  const hbmValue = data.find(d => d.name === "HBM Limit")?.value
+  const hasBaseline = data.some(d => d.baseline !== undefined)
+  const baselineValue = data.find(d => d.baseline !== undefined)?.baseline
+  const chartData = hasHBMLine ? data.filter(d => d.name !== "HBM Limit") : data
 
   return (
     <motion.div
@@ -69,20 +71,33 @@ export function ProjectChart({ data, label }: ProjectChartProps) {
               tickLine={false}
             />
             <Tooltip content={<CustomTooltip />} cursor={{ fill: "hsl(0, 0%, 90%, 0.1)" }} />
-            {hasReferenceLine && referenceValue && (
+            {hasHBMLine && hbmValue && (
               <ReferenceLine
-                y={referenceValue}
+                y={hbmValue}
                 stroke="hsl(350, 65%, 55%)"
                 strokeDasharray="5 5"
                 label={{
-                  value: `HBM Limit (${referenceValue} GB/s)`,
+                  value: `HBM Limit (${hbmValue} GB/s)`,
                   position: "insideTopRight",
                   fill: "hsl(350, 65%, 55%)",
                   fontSize: 11,
                 }}
               />
             )}
-            <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={60}>
+            {hasBaseline && baselineValue !== undefined && (
+              <ReferenceLine
+                y={baselineValue}
+                stroke="hsl(0, 0%, 60%)"
+                strokeDasharray="4 4"
+                label={{
+                  value: `Parity (${baselineValue}×)`,
+                  position: "insideTopLeft",
+                  fill: "hsl(0, 0%, 55%)",
+                  fontSize: 11,
+                }}
+              />
+            )}
+            <Bar dataKey="value" radius={[6, 6, 0, 0]} maxBarSize={60} animationDuration={800}>
               {chartData.map((_, index) => (
                 <Cell key={index} fill={COLORS[index % COLORS.length]} />
               ))}
