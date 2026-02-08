@@ -145,15 +145,13 @@ export function ProjectDetailPage({ project, content }: ProjectDetailPageProps) 
           </section>
         )}
 
-        {/* Markdown Content */}
+        {/* Deep Dive Content */}
         {content && (
           <section className="pb-16 sm:pb-24">
             <FadeIn delay={0.3}>
-              <div className="border-t border-gray-200 dark:border-gray-800 pt-8 sm:pt-12">
-                <article className="max-w-4xl">
-                  <MarkdownRenderer content={content} />
-                </article>
-              </div>
+              <article className="max-w-3xl">
+                <MarkdownRenderer content={content} />
+              </article>
             </FadeIn>
           </section>
         )}

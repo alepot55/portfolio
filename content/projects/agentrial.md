@@ -1,107 +1,34 @@
-## The Problem
+## Motivation
 
-Your agent passes Monday, fails Wednesday. Same prompt, same model. LLMs show up to **72% variance** across runs even at `temperature=0`.
+AI agents are unreliable. The same agent, same prompt, same model can pass on Monday and fail on Wednesday. Research shows LLMs exhibit up to **72% variance** across runs, even at `temperature=0`. Yet the standard practice is to run an agent once, see it work, and ship it.
 
-**agentrial** runs your agent N times and gives you **statistics, not luck**.
+I built agentrial because I was tired of anecdotes. I wanted **confidence intervals**.
 
-## Quick Start
+## The Core Insight
 
-```bash
-pip install agentrial
-agentrial init
-agentrial run
-```
+Agent evaluation is a statistical problem, not a pass/fail one. A single successful run tells you nothing about production reliability. You need multiple trials, proper statistical tests, and a framework that tracks *where* failures happen — not just *that* they happen.
 
-## How It Works
+agentrial borrows from clinical trial methodology: run your agent N times, compute Wilson confidence intervals on pass rates, and use Fisher's exact test to pinpoint which *step* in the pipeline is the weak link. No more guessing.
 
-Define your tests in YAML or Python, and agentrial handles the rest:
+## What It Does
 
-```yaml
-# agentrial.yaml
-suite: booking-agent
-trials: 50
-model: gpt-4o
+The framework wraps around any agent — LangGraph, CrewAI, AutoGen, OpenAI Agents SDK, or custom — and provides:
 
-tests:
-  - name: simple_booking
-    input: "Book a table for 2 at 7pm"
-    assert:
-      - type: contains
-        value: "confirmed"
-```
+- **Multi-trial execution** with configurable parallelism
+- **Wilson confidence intervals** on every metric
+- **Step-level failure attribution** via Fisher exact test: if step 3 fails 40% of the time, you see it
+- **Real cost tracking** across 45+ models with per-test breakdowns
+- **Drift detection** for production: CUSUM, Page-Hinkley, and Kolmogorov-Smirnov detectors catch regressions before users do
+- **Agent Reliability Score (ARS)**: a composite 0-100 metric combining success rate, latency, cost, and consistency
 
-Or use the fluent Python API:
+## Design Decisions
 
-```python
-from agentrial import Suite
+**Local-first, no SaaS.** agentrial runs entirely on your machine. No telemetry, no cloud dependency. Tests are defined in YAML or Python, results are stored locally, and everything integrates with CI/CD via GitHub Actions.
 
-suite = Suite("booking-agent", trials=50)
-suite.add_test(
-    name="simple_booking",
-    input="Book a table for 2 at 7pm",
-    assertions=[{"type": "contains", "value": "confirmed"}]
-)
-results = suite.run()
-```
+**Framework-agnostic.** Adapter-based architecture means adding support for a new framework is ~50 lines of code. The 6 built-in adapters cover the majority of the ecosystem.
 
-## Core Capabilities
+**MCP Security Scanner.** As Model Context Protocol tools proliferate, security becomes critical. The built-in scanner analyzes MCP integrations for common vulnerabilities before they reach production.
 
-### Statistical Evaluation
-- **Wilson Confidence Intervals** for pass rates — not just "it worked 8/10 times"
-- **Fisher Exact Test** for step-level failure attribution — pinpoints *where* your agent breaks
-- **Agent Reliability Score (ARS)** — composite 0-100 metric combining success rate, latency, cost, and consistency
+## Impact
 
-### Production Monitoring
-- **CUSUM Detector** — catches gradual drift in agent performance
-- **Page-Hinkley Test** — detects sudden mean shifts
-- **KS Detector** — identifies distribution changes in response patterns
-- **Real-time dashboard** for monitoring agent health
-
-### Cost Intelligence
-- Real cost tracking across **45+ models** (GPT-4o, Claude, Gemini, Llama, Mistral, etc.)
-- Per-test and per-suite cost breakdowns
-- Pareto frontier analysis: find the best cost-quality tradeoff
-
-### Framework Adapters
-Works with your existing stack:
-
-| Framework | Status |
-|-----------|--------|
-| LangGraph | Supported |
-| CrewAI | Supported |
-| AutoGen | Supported |
-| Pydantic AI | Supported |
-| OpenAI Agents SDK | Supported |
-| smolagents | Supported |
-| OTel | Supported |
-| Custom | Supported |
-
-## CLI Reference
-
-```bash
-agentrial run              # Run test suite
-agentrial compare          # Compare two runs
-agentrial baseline         # Set performance baseline
-agentrial snapshot         # Save current state
-agentrial security         # MCP security scan
-agentrial pareto           # Cost-quality frontier
-agentrial prompt           # Prompt version control
-agentrial monitor          # Production monitoring
-agentrial ars              # Agent Reliability Score
-agentrial publish          # Publish results
-agentrial verify           # Verify reproducibility
-agentrial dashboard        # Launch dashboard
-```
-
-## Architecture
-
-The framework is designed to be **local-first** with no SaaS dependency or telemetry:
-
-- YAML-based test definitions with fluent Python API
-- Pluggable framework adapters for any agent framework
-- CI/CD integration with GitHub Actions
-- VS Code extension for inline results
-
-## Testing
-
-The project has a comprehensive test suite with **450 tests** covering all features.
+The project is published on PyPI as an open-source package with MIT license, 450 passing tests, and a VS Code extension for inline results. The goal is to make "we ran it once and it worked" an unacceptable standard for agent deployment.

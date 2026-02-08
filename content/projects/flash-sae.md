@@ -1,90 +1,33 @@
-## The Problem
+## Motivation
 
-Sparse Autoencoders (SAEs) are a key tool in **Mechanistic Interpretability** — the field of understanding what neural networks actually learn. But training SAEs on large language models is painfully slow because:
+Sparse Autoencoders (SAEs) are one of the most promising tools in **Mechanistic Interpretability** — the field trying to understand what neural networks actually learn inside their weights. Anthropic's *Scaling Monosemanticity* paper showed that SAEs can extract human-interpretable features from large language models.
 
-- Standard PyTorch operations **materialize dense activations** even when only a few latents are active
-- The decoder step requires a full matrix multiply despite >99% sparsity
-- Ghost gradient computation for dead latent recovery adds further overhead
+The problem: training SAEs on production-scale models is painfully slow. The standard PyTorch implementation materializes dense activation matrices even though >99% of latent features are inactive at any time. For a typical SAE with 65,536 features and top-k=64, PyTorch allocates a matrix that is **1,024x larger** than necessary.
 
-## The Solution
+I built Flash-SAE to fix this.
 
-**Flash-SAE** provides drop-in replacement Triton kernels that exploit the inherent sparsity:
+## The Key Insight
 
-```python
-# Before: standard PyTorch SAE
-from sae import SparseAutoencoder
-model = SparseAutoencoder(d_model=4096, n_features=65536, k=64)
-
-# After: just change the import
-from flash_sae import SparseAutoencoder
-model = SparseAutoencoder(d_model=4096, n_features=65536, k=64)
-```
-
-## Benchmarks
-
-All benchmarks on RTX 4070, batch=1024, d_model=4096, n_features=65536, k=64, bfloat16:
-
-| Operation | PyTorch | Flash-SAE | Speedup | Memory Saved |
-|-----------|---------|-----------|---------|--------------|
-| Encoder | 1.00x | 1.06x | **1.06x** | **20%** |
-| Decoder | 1.00x | 13.60x | **13.6x** | **97%** |
-| Full Forward | 1.00x | 1.78x | **1.78x** | **25%** |
-
-The **13.6x decoder speedup** comes from never materializing the full dense activation matrix. Instead, the kernel directly gathers and scatters only the active latent columns.
+SAE computation is inherently sparse, but PyTorch doesn't know that. The encoder selects only k=64 active latents out of 65,536, yet the decoder multiplies through the full dense matrix. By fusing the top-k selection directly into the encoder kernel and using sparse scatter-gather operations in the decoder, we can skip the dense intermediate entirely.
 
 ## How It Works
 
-### Sparse Encoder Kernel
+**Sparse Encoder**: a single fused Triton kernel computes the projection, selects the top-k activations, and returns only the sparse indices and values — never materializing the full 65,536-dimensional hidden state.
 
-The encoder performs top-k selection fused with the forward pass:
+**Sparse Decoder**: instead of creating a dense [batch, n_features] matrix, the kernel directly scatter-gathers only the k active columns. Memory usage drops from O(batch × n_features × d_model) to O(batch × k × d_model).
 
-1. Compute `z = W_enc @ x + b_enc`
-2. Select top-k activations in a single fused kernel
-3. Return sparse indices and values without materializing the full hidden state
+**Ghost Gradients**: dead latents — features that never activate — are a critical problem in SAE training. The kernel detects latents with zero activation over a sliding window and injects small gradient signals to revive them, all within the same fused kernel with no additional memory cost.
 
-### Sparse Decoder Kernel
+## Results
 
-The decoder is where the biggest gains come from:
+Benchmarked on RTX 4070, batch=1024, d_model=4096, n_features=65,536, k=64, bfloat16:
 
-```
-# PyTorch (dense): y = topk_values @ W_dec[topk_indices]  → materializes [batch, n_features]
-# Flash-SAE (sparse): scatter-gather directly on active columns → O(batch × k × d_model)
-```
+- **Decoder: 13.6x speedup, 97% memory reduction** — the sparse gather avoids materializing the dense matrix entirely
+- **Full forward pass: 1.78x speedup, 25% memory reduction** — the encoder gains are modest, but the decoder dominates
+- **FP8 quantization** on Ada Lovelace+ GPUs provides further memory savings
 
-Since k=64 and n_features=65536, this avoids materializing a matrix that is **1024x larger** than needed.
+The library is a **drop-in replacement**: change one import line and get 13x on the decoder. Full autograd compatibility means existing training loops work unchanged.
 
-### Ghost Gradients
+## Why It Matters
 
-Dead latents (features that never activate) are a critical problem in SAE training. Flash-SAE implements **Ghost Gradients** — a technique that:
-
-1. Detects latents with zero activation over a window
-2. Injects small gradient signals to "revive" dead features
-3. Runs entirely within the fused kernel with no additional memory cost
-
-### FP8 Quantization
-
-On Ada Lovelace+ GPUs (RTX 40xx, H100), Flash-SAE supports FP8 quantization for the encoder and decoder weights, providing further memory reduction with minimal accuracy loss.
-
-## Project Structure
-
-```
-flash-sae/
-├── flash_sae/
-│   ├── sae.py                    # Main SAE module (drop-in replacement)
-│   └── kernels/
-│       ├── encoder.py            # Fused top-k encoder kernel
-│       ├── decoder.py            # Sparse scatter-gather decoder
-│       ├── topk.py               # Fused top-k selection
-│       └── ghost_grads.py        # Dead latent recovery
-├── examples/
-│   └── train_gpt2_demo.py        # Full training example on GPT-2
-├── benchmarks/
-│   └── benchmark.py              # Reproducible benchmarking script
-└── tests/
-    └── test_sae.py               # 19 tests covering all operations
-```
-
-## References
-
-- Anthropic, *Scaling Monosemanticity* (2024)
-- Anthropic, *Towards Monosemanticity* (2023)
+Mechanistic Interpretability is limited by compute. Researchers at Anthropic, EleutherAI, and independent labs need to train thousands of SAEs to map out the features of frontier models. Flash-SAE makes each training run nearly 2x faster and uses significantly less memory, enabling larger-scale experiments on consumer hardware.
