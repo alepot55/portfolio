@@ -20,6 +20,8 @@ interface PortfolioPageProps {
   achievements: Achievement[]
   skills: Record<string, string[]>
   projectContentMap: Record<string, boolean>
+  experienceContentMap: Record<string, boolean>
+  educationContentMap: Record<string, boolean>
 }
 
 function SectionHeading({ children, id }: { children: React.ReactNode; id?: string }) {
@@ -49,15 +51,16 @@ export function PortfolioPage({
   achievements,
   skills,
   projectContentMap,
+  experienceContentMap,
+  educationContentMap,
 }: PortfolioPageProps) {
   const [activeFilter, setActiveFilter] = useState("all")
 
   const featuredProjects = projects.filter((p) => p.featured)
-  const otherProjects = projects.filter((p) => !p.featured)
   const filteredProjects =
     activeFilter === "all"
-      ? otherProjects
-      : otherProjects.filter((p) => p.category === activeFilter)
+      ? projects
+      : projects.filter((p) => p.category === activeFilter)
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100">
@@ -114,32 +117,6 @@ export function PortfolioPage({
               <span className="text-gray-800 dark:text-gray-200 font-medium">Politecnico di Milano</span>,
               building high-performance AI systems, GPU kernels, and open-source tools.
             </p>
-          </motion.div>
-
-          {/* Stats Bar */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15 }}
-            className="flex flex-wrap gap-8 sm:gap-12"
-            role="list"
-            aria-label="Key statistics"
-          >
-            {[
-              { value: "9", label: "Projects" },
-              { value: "800+", label: "Hours Mentoring" },
-              { value: "110/110", label: "cum Laude" },
-              { value: "Top 1.5%", label: "AI Challenge" },
-            ].map((stat) => (
-              <div key={stat.label} role="listitem">
-                <p className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
-                  {stat.value}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 uppercase tracking-wider mt-1">
-                  {stat.label}
-                </p>
-              </div>
-            ))}
           </motion.div>
         </section>
 
@@ -212,7 +189,7 @@ export function PortfolioPage({
             <SectionHeading id="experience">Experience</SectionHeading>
             <div className="space-y-8">
               {experiences.map((experience, index) => (
-                <ExperienceItem key={experience.id} experience={experience} index={index} />
+                <ExperienceItem key={experience.id} experience={experience} index={index} hasContent={experienceContentMap[experience.id] || false} />
               ))}
             </div>
           </section>
@@ -221,7 +198,7 @@ export function PortfolioPage({
             <SectionHeading id="education">Education</SectionHeading>
             <div className="space-y-8">
               {education.map((edu, index) => (
-                <EducationItem key={edu.id} education={edu} index={index} />
+                <EducationItem key={edu.id} education={edu} index={index} hasContent={educationContentMap[edu.id] || false} />
               ))}
             </div>
           </section>

@@ -64,10 +64,6 @@ export function ThemeProvider({
     },
   }
 
-  if (!mounted) {
-    return <div style={{ visibility: "hidden" }}>{children}</div>
-  }
-
   return (
     <ThemeProviderContext.Provider {...props} value={value}>
       {children}

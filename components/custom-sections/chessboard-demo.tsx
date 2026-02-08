@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react"
 import { motion } from "framer-motion"
 import { RotateCcw, Undo2 } from "lucide-react"
+import "@alepot55/chessboardjs/src/styles/index.css"
 import type { Project } from "@/data/projects"
 
 interface ChessboardInstance {

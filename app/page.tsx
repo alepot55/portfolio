@@ -12,6 +12,16 @@ export default function Home() {
     projectContentMap[project.id] = hasContentFile("projects", project.id)
   }
 
+  const experienceContentMap: Record<string, boolean> = {}
+  for (const exp of experiences) {
+    experienceContentMap[exp.id] = hasContentFile("experiences", exp.id)
+  }
+
+  const educationContentMap: Record<string, boolean> = {}
+  for (const edu of education) {
+    educationContentMap[edu.id] = hasContentFile("education", edu.id)
+  }
+
   return (
     <PortfolioPage
       projects={projects}
@@ -20,6 +30,8 @@ export default function Home() {
       achievements={achievements}
       skills={skills}
       projectContentMap={projectContentMap}
+      experienceContentMap={experienceContentMap}
+      educationContentMap={educationContentMap}
     />
   )
 }

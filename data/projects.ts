@@ -113,6 +113,7 @@ export const projects: Project[] = [
     period: "2026",
     github: "https://github.com/alepot55/verify-cbl",
     category: "ai-ml",
+    featured: true,
   },
   {
     id: "gpu-performance-analysis",
